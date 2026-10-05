@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pranit Pisal | Data Analyst & Cloud Specialist</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        :root {
+            --bg-dark: #030712; /* Deeper slate for a modern data vibe */
+            --bg-panel: rgba(17, 24, 39, 0.7);
+            --primary-glow: #38bdf8; /* Data Blue */
+            --secondary-glow: #818cf8; /* Deep Indigo */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --terminal-green: #34d399; /* Softer, modern terminal green */
+            --font-mono: 'Fira Code', monospace;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-glow);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--secondary-glow);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+        }
+        
+        /* Animated Tech Grid Background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(129, 140, 248, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px); }
+        }
+
+        /* Premium Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 1000;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+            text-transform: lowercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '/>';
+            opacity: 0;
+            color: var(--primary-glow);
+            position: absolute;
+            right: -20px;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover::before {
+            opacity: 1;
+            right: -25px;
+        }
+        .nav-links a:hover {
+            color: var(--primary-glow);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 950px;
+            padding: 0 2rem;
+            z-index: 1;
+            margin-top: 5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid var(--primary-glow);
+            border-radius: 4px;
+            color: var(--primary-glow);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        /* Interactive Terminal */
+        .terminal {
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 0 auto;
+            max-width: 750px;
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(129, 140, 248, 0.08);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .terminal-dots div {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+        }
+        .dot-r { background: #ff5f56; }
+        .dot-y { background: #ffbd2e; }
+        .dot-g { background: #27c93f; }
+
+        .terminal-content {
+            font-family: var(--font-mono);
+            color: var(--terminal-green);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            min-height: 140px;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--primary-glow);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Sections General */
+        section {
+            padding: 100px 3rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 4rem;
+            font-family: var(--font-mono);
+        }
+
+        /* 3D Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-panel);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: border-color 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            border-left: 2px solid rgba(56, 189, 248, 0.2);
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            color: var(--secondary-glow);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-role {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .timeline-company {
+            color: var(--primary-glow);
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .timeline-highlights li {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            margin-left: 1.5rem;
+            list-style-type: square;
+        }
+        
+        .timeline-highlights li::marker {
+            color: var(--primary-glow);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.3rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--secondary-glow);
+            color: var(--secondary-glow);
+            box-shadow: 0 0 15px rgba(129, 140, 248, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-links a {
+            display: inline-block;
+            margin-top: 1.5rem;
+            margin-right: 1rem;
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--primary-glow);
+            color: var(--primary-glow);
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .project-links a:hover {
+            background: var(--primary-glow);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 3rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+            section { padding: 80px 1.5rem; }
+            .timeline { padding-left: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <div class="cyber-grid"></div>
+
+    <nav class="navbar">
+        <div class="logo">pisal.data_cloud()</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">sudo su - data_and_cloud_specialist</div>
+            <h1>
+                Architecting Data Intelligence <br>
+                <span class="hero-gradient">& Cloud Automation</span>
+            </h1>
+            <p class="hero-subtitle">
+                Bridging data analytics, statistical modeling, and scalable cloud infrastructure to transform complex datasets into actionable business intelligence.
+            </p>
+            
+            <div class="terminal glass-card" id="tilt-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+                    </div>
+                    <div style="color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem;">root@pranit-vm:~#</div>
+                </div>
+                <div class="terminal-content" id="typed-text"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Execution Log</h2>
+        <p class="section-subtitle">SELECT * FROM professional_history ORDER BY start_date DESC;</p>
+        
+        <div class="timeline">
+            <div class="timeline-item glass-card tilt-element">
+                <div class="timeline-date">Feb 2026 – July 2026</div>
+                <div class="timeline-role">Data Analyst & Cloud Specialist</div>
+                <div class="timeline-company">IRMAI | Remote</div>
+                <ul class="timeline-highlights">
+                    <li>Developed and automated Tableau reports and dashboards to provide executive stakeholders with real-time visibility into infrastructure health, patch management, and security metrics.</li>
+                    <li>Analyzed large-scale telemetry data points and managed cloud security posture across production Azure environments.</li>
+                    <li>Cross-verified cloud configurations and analyzed deployment data to ensure strict compliance with ISO security standards for a London-based client.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item glass-card tilt-element">
+                <div class="timeline-date">Jan 2025 – Jan 2026</div>
+                <div class="timeline-role">Data & Cloud Consultant</div>
+                <div class="timeline-company">Freelance | Remote</div>
+                <ul class="timeline-highlights">
+                    <li>Engineered a Python-based billing data automation engine integrating Microsoft APIs to accurately track, meter, and analyze resource consumption data.</li>
+                    <li>Automated cost calculation workflows by aggregating time-bound resource telemetry data and applying dynamic pricing models for marketplace customers.</li>
+                    <li>Containerized Python (FastAPI) backend services using Docker, migrating monolithic data applications to a microservices architecture to streamline data flow.</li>
+                </ul>
+            </div>
+            
+            <div class="timeline-item glass-card tilt-element">
+                <div class="timeline-date">Aug 2024 – Jan 2025</div>
+                <div class="timeline-role">Data Analyst Intern</div>
+                <div class="timeline-company">Access Million | Remote</div>
+                <ul class="timeline-highlights">
+                    <li>Developed and maintained automated Python scripts to clean, process, and structure large datasets for machine learning pipelines.</li>
+                    <li>Built interactive data visualizations and operational dashboards to track data pipeline efficiency and dataset metrics.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item glass-card tilt-element">
+                <div class="timeline-date">Oct 2022 – July 2024</div>
+                <div class="timeline-role">Data Analyst & Software Developer</div>
+                <div class="timeline-company">Zymr Systems | Pune, India</div>
+                <ul class="timeline-highlights">
+                    <li>Optimized SQL database queries and backend Python code, reducing overall data processing time by 25%.</li>
+                    <li>Implemented machine learning models for internal analytics, predicting customer behavior and identifying workflow enhancements to drive project efficiency.</li>
+                    <li>Configured comprehensive time-series data monitoring and alerting systems using AWS CloudWatch, Prometheus, and Grafana to track system performance.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Tech Stack</h2>
+        <p class="section-subtitle">import dependencies as data_cloud_toolkit</p>
+        
+        <div class="skills-grid">
+            <div class="glass-card tilt-element">
+                <h3 style="color: var(--primary-glow); font-family: var(--font-mono); margin-bottom: 1rem;">[Data_Analytics_&_ML]</h3>
+                <div>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Tableau</span>
+                    <span class="skill-tag">Pandas / NumPy</span>
+                    <span class="skill-tag">Scikit-Learn</span>
+                    <span class="skill-tag">Predictive Modeling</span>
+                </div>
+            </div>
+            
+            <div class="glass-card tilt-element">
+                <h3 style="color: var(--secondary-glow); font-family: var(--font-mono); margin-bottom: 1rem;">[Cloud_Infrastructure]</h3>
+                <div>
+                    <span class="skill-tag">AWS (EKS, EC2)</span>
+                    <span class="skill-tag">Azure (AKS)</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">Terraform</span>
+                    <span class="skill-tag">Prometheus / Grafana</span>
+                </div>
+            </div>
+
+            <div class="glass-card tilt-element">
+                <h3 style="color: var(--primary-glow); font-family: var(--font-mono); margin-bottom: 1rem;">[Development_&_Pipelines]</h3>
+                <div>
+                    <span class="skill-tag">GitLab CI / GitHub Actions</span>
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">Bash Scripting</span>
+                    <span class="skill-tag">MySQL / PostgreSQL</span>
+                    <span class="skill-tag">Data Cleaning (EDA)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Architecture & Analytics Buildouts</h2>
+        <p class="section-subtitle">print(portfolio.get_latest_projects())</p>
+        
+        <div class="projects-grid">
+            <div class="glass-card tilt-element">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem;">Predictive Profit Modeling</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Developed a machine learning Multiple Linear Regression model to predict startup profitability based on operational spend, achieving 95.3% training and 90% testing accuracy.</p>
+                <div>
+                    <span class="skill-tag">Python</span> <span class="skill-tag">Pandas</span> <span class="skill-tag">Scikit-Learn</span>
+                </div>
+            </div>
+
+            <div class="glass-card tilt-element">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem;">HR Analytics Dashboard</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Designed an interactive Business Intelligence dashboard visualizing employee attrition data. Uncovered key turnover patterns segmented by age, salary, and department.</p>
+                <div>
+                    <span class="skill-tag">Tableau</span> <span class="skill-tag">Data Visualization</span> <span class="skill-tag">SQL</span>
+                </div>
+            </div>
+            
+            <div class="glass-card tilt-element">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem;">Azure SaaS Data Engine</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Engineered a Python-based automation engine integrating Microsoft APIs to track, meter, and analyze telemetry consumption data for multi-tenant cloud deployments.</p>
+                <div>
+                    <span class="skill-tag">Python</span> <span class="skill-tag">REST APIs</span> <span class="skill-tag">Azure</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>System Online. Built by Pranit Pisal | pisalpranit1@gmail.com.</p>
+    </footer>
+
+    <script>
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 150, fill: 'forwards' });
+        });
+
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.borderColor = 'var(--primary-glow)';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.borderColor = 'var(--secondary-glow)';
+            });
+        });
+
+        // Terminal Typewriter Effect - Updated for Data & Cloud Theme
+        const commands = [
+            "import pandas as pd",
+            "import cloud_infrastructure as ci",
+            "fetching large datasets from AWS S3...",
+            "[OK] Data cleaned and preprocessed",
+            "running predictive_model.py...",
+            "Model Accuracy: 95.3% | Target: Azure AKS",
+            "[SYSTEM] Data pipelines and dashboards successfully deployed.",
+            "init portfolio.html..."
+        ];
+        
+        let commandIndex = 0;
+        let charIndex = 0;
+        const terminalElement = document.getElementById('typed-text');
+        
+        function typeWriter() {
+            if (commandIndex < commands.length) {
+                if (charIndex < commands[commandIndex].length) {
+                    terminalElement.innerHTML += commands[commandIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 40);
+                } else {
+                    terminalElement.innerHTML += '<br><span style="color: var(--text-muted)">root@pranit-vm:~# </span>';
+                    commandIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 500);
+                }
+            } else {
+                terminalElement.innerHTML += '<span class="cursor-blink"></span>';
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+
+        // Vanilla 3D Tilt Effect
+        const tiltElements = document.querySelectorAll('.tilt-element');
+        
+        tiltElements.forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; 
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                element.style.transition = 'transform 0.5s ease';
+            });
+            
+            element.addEventListener('mouseenter', () => {
+                element.style.transition = 'none'; 
+            });
+        });
+    </script>
+</body>
+</html>
